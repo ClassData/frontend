@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel AVA</title>
+
+    <link rel="stylesheet" href="css/interface.css">
+    <script src="js/interface.js" defer></script>
+
+</head>
+
+<body>
+    <!-- ================= Container principal ================= -->
+    <div class="container">
+
+        <!-- ================= Menu de navegação lateral ================= -->
+        <div class="navigation">
+            <ul>
+                <!-- Logo/identificação do painel -->
+                <li>
+                    <a href="#">
+                        <span class="icon">
+                            <ion-icon name="school-outline"></ion-icon>
+                        </span>
+                        <span class="title">Painel AVA</span>
+                    </a>
+                </li>
+
+                <!-- Botões de navegação principais -->
+                <li>
+                    <a href="#" id="show_home">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Painel Professor</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="show_turmas">
+                        <span class="icon"><ion-icon name="grid-outline"></ion-icon></span>
+                        <span class="title">Minhas Turmas</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="show_alunos">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Alunos</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="show_graficos">
+                        <span class="icon"><ion-icon name="bar-chart-outline"></ion-icon></span>
+                        <span class="title">Gráficos Gerais</span>
+                    </a>
+                </li>
+
+                <!-- Sair do painel -->
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- ================= Conteúdo principal ================= -->
+        <div class="main" id="main-content">
+
+            <!-- Topbar: menu toggle e busca -->
+            <div class="topbar">
+                <!-- Botão para abrir/fechar menu lateral -->
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+
+                <!-- Campo de busca -->
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Procure por turma ou aluno">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ================= Home (Painel do Professor) ================= -->
+            <div id="home_content" style="display: block;">
+
+                <!-- Cards com informações gerais -->
+                <div class="cardBox">
+                    <!-- Card do professor -->
+                    <div class="card">
+                        <div>
+                            <div class="numbers">Prof. Fulano Ciclanodense</div>
+                            <div class="cardName">Centro de Ciências Computacionais</div>
+                        </div>
+                        <div class="iconBx">
+                            <ion-icon name="person-circle-outline"></ion-icon>
+                        </div>
+                    </div>
+
+                    <!-- Card total de turmas -->
+                    <div class="card">
+                        <div>
+                            <div class="numbers">8</div>
+                            <div class="cardName">Turmas Atribuídas</div>
+                        </div>
+                        <div class="iconBx"><ion-icon name="grid-outline"></ion-icon></div>
+                    </div>
+
+                    <!-- Card total de alunos -->
+                    <div class="card">
+                        <div>
+                            <div class="numbers">215</div>
+                            <div class="cardName">Alunos Ativos</div>
+                        </div>
+                        <div class="iconBx"><ion-icon name="people-outline"></ion-icon></div>
+                    </div>
+                </div>
+
+                <!-- ================= Lista de Turmas ================= -->
+                <div class="details">
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h2>Minhas Turmas</h2>
+                            <a href="#" class="btn" id="view_all_turmas_btn">Ver Todas</a>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Código da Turma</td>
+                                    <td>Disciplina</td>
+                                    <td>Semestre</td>
+                                    <td>Ação</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Turmas com botão de acessar -->
+                                <tr>
+                                    <td>COD001</td>
+                                    <td>Algoritmo e Estrutura de Dados I</td>
+                                    <td>2024.1</td>
+                                    <td><span class="status available"><a href="#" data-turma-id="COD001" class="acessar-turma-btn">Acessar</a></span></td>
+                                </tr>
+                                <tr>
+                                    <td>COD002</td>
+                                    <td>Projeto de Desenvolvimento de Software II</td>
+                                    <td>2024.1</td>
+                                    <td><span class="status loan"><a href="#" data-turma-id="COD002" class="acessar-turma-btn">Acessar</a></span></td>
+                                </tr>
+                                <tr>
+                                    <td>COD003</td>
+                                    <td>Atividade de Integração Curricular IV</td>
+                                    <td>2024.1</td>
+                                    <td><span class="status overdue"><a href="#" data-turma-id="COD003" class="acessar-turma-btn">Acessar</a></span></td>
+                                </tr>
+                                <tr>
+                                    <td>COD004</td>
+                                    <td>Cálculo II</td>
+                                    <td>2023.2</td>
+                                    <td><span class="status available"><a href="#" data-turma-id="COD004" class="acessar-turma-btn">Acessar</a></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- ================= Comunicações Recentes ================= -->
+                    <div class="recentCustomers">
+                        <div class="cardHeader">
+                            <h2>Comunicações Recentes</h2>
+                        </div>
+                        <table>
+                            <tr>
+                                <td><h4>Aviso importante sobre notas finais.</h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Lembrete: Reunião de Coordenadores em 15/05.</h4></td>
+                            </tr>
+                            <tr>
+                                <td><h4>Novo material de apoio para Análise de Dados I.</h4></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= Tela de Turmas ================= -->
+            <div id="turmas_content" style="display: none;">
+                <div class="pageHeader">
+                    <h2>Turma: <span id="turma_titulo"></span></h2>
+                    <a href="#" class="btn back-to-home">Voltar ao Painel</a>
+                </div>
+                <div class="details">
+                    <!-- Alunos da turma -->
+                    <div class="recentOrders">
+                        <div class="cardHeader">
+                            <h3>Alunos da Turma <span id="turma_titulo_alunos"></span></h3>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Matrícula</td>
+                                    <td>Nome do Aluno</td>
+                                    <td>Coeficiente</td>
+                                    <td>Ação</td>
+                                </tr>
+                            </thead>
+                            <tbody id="lista_alunos_turma">
+                                <!-- Preenchido via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Gráficos da turma -->
+                    <div class="recentCustomers">
+                        <div class="cardHeader"><h3>Gráficos da Turma</h3></div>
+                        <div class="chart-options">
+                            <button class="btn chart-btn" data-chart-type="notas">Notas Médias</button>
+                            <button class="btn chart-btn" data-chart-type="presenca">Presença Geral</button>
+                            <button class="btn chart-btn" data-chart-type="desempenho">Desempenho por Período</button>
+                        </div>
+                        <div id="turma_graficos_container" style="margin-top: 20px;">
+                            <!-- Gráficos carregados via JS -->
+                            <p>Selecione um gráfico para visualizar os dados da turma.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= Tela de Aluno ================= -->
+            <div id="alunos_content" style="display: none;">
+                <div class="pageHeader">
+                    <h2>Dados do Aluno: <span id="aluno_nome"></span></h2>
+                    <a href="#" class="btn back-to-turma">Voltar para Turma</a>
+                </div>
+                <div class="details">
+                    <!-- Informações do aluno -->
+                    <div class="recentOrders">
+                        <div class="cardHeader"><h3>Informações Detalhadas</h3></div>
+                        <p><strong>Matrícula:</strong> <span id="aluno_matricula"></span></p>
+                        <p><strong>Nome Completo:</strong> <span id="aluno_nome_completo"></span></p>
+                        <p><strong>Coeficiente:</strong> <span id="aluno_coeficiente"></span></p>
+                        <p><strong>Presença Média:</strong> <span id="aluno_presenca_media"></span>%</p>
+
+                        <!-- Notas e presenças -->
+                        <h3 style="margin-top: 20px;">Notas e Presenças</h3>
+                        <table style="width:100%; margin-top:10px;">
+                            <thead>
+                                <tr>
+                                    <th>Disciplina</th>
+                                    <th>Nota Final</th>
+                                    <th>Presença</th>
+                                    <th>Faltas</th>
+                                </tr>
+                            </thead>
+                            <tbody id="aluno_notas_presencas">
+                                <!-- Preenchido via JS -->
+                                <tr>
+                                    <td>Projeto de Desenvolvimento de Software II</td>
+                                    <td>8.5</td>
+                                    <td>90%</td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>AIC IV</td>
+                                    <td>7.0</td>
+                                    <td>85%</td>
+                                    <td>3</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Gráficos do aluno -->
+                    <div class="recentCustomers">
+                        <div class="cardHeader"><h3>Gráficos do Aluno</h3></div>
+                        <div class="chart-options">
+                            <button class="btn chart-btn" data-chart-type="historico_notas">Histórico de Notas</button>
+                            <button class="btn chart-btn" data-chart-type="presenca_disciplina">Presença por Disciplina</button>
+                            <button class="btn chart-btn" data-chart-type="evolucao_coeficiente">Evolução Coeficiente</button>
+                        </div>
+                        <div id="aluno_graficos_container" style="margin-top: 20px;">
+                            <p>Selecione um gráfico para visualizar os dados do aluno.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= Gráficos Gerais ================= -->
+            <div id="graficos_content" style="display: none;">
+                <div class="pageHeader">
+                <h2>Gráficos Gerais</h2>
+                </div>
+                <div class="chart-options">
+                    <button class="btn chart-btn" data-chart-type="desempenho_geral">Desempenho Geral por Disciplina</button>
+                    <button class="btn chart-btn" data-chart-type="media_turmas">Média de Notas por Turma</button>
+                </div>
+                <div id="graficos_gerais_container" style="margin-top: 20px;">
+                    <p>Selecione um gráfico para visualizar os dados gerais.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
