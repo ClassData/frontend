@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="css/interface.css">
     <script src="js/interface.js" defer></script>
 
+    <script src="config.js" defer></script>
+    <script type="module" src="js/getInfosInterface.js" defer></script>
 </head>
 
 <body>
@@ -76,10 +78,9 @@
 
                 <!-- Campo de busca -->
                 <div class="search">
-                    <label>
-                        <input type="text" placeholder="Procure por turma ou aluno">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </label>
+                    <input type="text" id="search_input" placeholder="Digite matrícula do aluno ou código da turma">
+                    <button id="search_aluno_btn">Buscar Aluno</button>
+                    <button id="search_turma_btn">Buscar Turma</button>
                 </div>
             </div>
 
