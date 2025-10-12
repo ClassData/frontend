@@ -213,17 +213,23 @@
 
                     <!-- Gráficos da turma -->
                     <div class="recentCustomers">
-                        <div class="cardHeader"><h3>Gráficos da Turma</h3></div>
-                        <div class="chart-options">
-                            <button class="btn chart-btn" data-chart-type="notas">Notas Médias</button>
-                            <button class="btn chart-btn" data-chart-type="presenca">Presença Geral</button>
-                            <button class="btn chart-btn" data-chart-type="desempenho">Desempenho por Período</button>
-                        </div>
-                        <div id="turma_graficos_container" style="margin-top: 20px;">
-                            <!-- Gráficos carregados via JS -->
-                            <p>Selecione um gráfico para visualizar os dados da turma.</p>
-                        </div>
+                    <!-- Título da seção -->
+                    <div class="cardHeader">
+                        <h3>Gráficos da Turma</h3>
                     </div>
+
+                    <!-- Botões de gráfico -->
+                    <div class="chart-options">
+                        <button class="btn chart-btn" data-chart-type="notas">Notas Médias</button>
+                        <button class="btn chart-btn" data-chart-type="presenca">Presença Geral</button>
+                        <button class="btn chart-btn" data-chart-type="desempenho">Desempenho por Período</button>
+                    </div>
+                </div>
+
+                <!-- Gráfico separado, abaixo dos botões -->
+                <div id="turma_graficos_container" class="chart-container" style="margin-top: 20px;">
+                    <p>Selecione um gráfico para visualizar os dados da turma.</p>
+                </div>
                 </div>
             </div>
 
@@ -279,9 +285,11 @@
                             <button class="btn chart-btn" data-chart-type="presenca_disciplina">Presença por Disciplina</button>
                             <button class="btn chart-btn" data-chart-type="evolucao_coeficiente">Evolução Coeficiente</button>
                         </div>
-                        <div id="aluno_graficos_container" style="margin-top: 20px;">
-                            <p>Selecione um gráfico para visualizar os dados do aluno.</p>
-                        </div>
+                    </div>
+
+                    <!-- Container de gráficos agora fica abaixo -->
+                    <div id="aluno_graficos_container" style="margin-top: 20px;">
+                        <p>Selecione um gráfico para visualizar os dados do aluno.</p>
                     </div>
                 </div>
             </div>
