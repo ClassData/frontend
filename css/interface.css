@@ -281,7 +281,8 @@ body {
 .details .recentOrders,
 .recentCustomers {
   display: grid;
-  min-height: 500px;
+  min-height: auto;
+  height: fit-content;
   padding: 20px;
   background: var(--white);
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
@@ -434,12 +435,19 @@ body {
 
 /* Opções de gráficos */
 .chart-options {
-  margin-top: 15px;
+  margin-top: 10px;
   display: flex;
-  flex-wrap: wrap;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
+.chart-options .btn.chart-btn {
+  padding: 5px 12px; 
+  font-size: 0.9rem;   
+  border-radius: 5px;
+  min-width: unset;    
+  
+}
 /* ================== INFORMAÇÕES DETALHADAS DO ALUNO ================== */
 #alunos_content p {
   margin-bottom: 8px;
@@ -483,6 +491,59 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#aluno_graficos_container {
+  width: 100%;
+  min-height: 300px;
+  background: var(--gray);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  padding: 20px;
+  color: var(--black2);
+}
+/* =================== BOTÕES DE GRÁFICO =================== */
+/* estilo base comum para todos os botões de gráfico */
+.chart-options .btn.chart-btn {
+  border-radius: 5px;
+  background-color: var(--accent);
+  color: var(--white);
+  border: none;
+  cursor: pointer;
+  transition: filter 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  min-width: unset; /* evita herdar larguras de outros botões */
+}
+
+/* hover base */
+.chart-options .btn.chart-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* ================== BOTÕES DO ALUNO ================== */
+.aluno-graficos .chart-options .btn.chart-btn {
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  margin-left: 15px;
+}
+/* ================== BOTÕES DA TURMA ================== */
+.turma-graficos .chart-options .btn.chart-btn {
+  padding: 5px 12px;
+  font-size: 0.9rem;
+  margin-left: 15px;
+}
+
+/* ================== BOTÕES GRÁFICOS GERAIS ================== */
+.graficos-gerais .chart-options .btn.chart-btn {
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  margin-left: 20px;
 }
 
 /* ================== RESPONSIVO ================== */
