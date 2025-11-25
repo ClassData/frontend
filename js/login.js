@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Aqui você integraria com um backend real
             console.log('Dados de login:', { username, password });
-            alert('Login simulado! Verifique o console para os dados.');
+            alert('Login simulado! Redirecionando para o painel...');
+            window.location.href = 'interface.html'; // <-- redireciona para o painel
 
         });
     }
