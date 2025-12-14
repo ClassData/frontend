@@ -76,30 +76,67 @@ backToHomeBtns.forEach(btn => {
 
 // 1. Listar turmas na Home
 function carregarTurmas() {
+  console.log("Iniciando busca de turmas..."); // Log para debug
+
   fetch("http://127.0.0.1:8000/classes")
     .then(res => res.json())
     .then(turmas => {
+      console.log("Turmas recebidas:", turmas); 
+
       const tbody = document.querySelector("#home_content .recentOrders tbody");
-      tbody.innerHTML = "";
+      
+      // Se não achou a tabela, para tudo para não dar erro
+      if (!tbody) {
+          console.error("Erro: Tabela não encontrada no HTML!");
+          return;
+      }
+
+      tbody.innerHTML = ""; // Limpa a tabela
+
       turmas.forEach(turma => {
+        // SEGURANÇA: Garante que os campos existam mesmo se o backend falhar
+        const idCurto = turma.id ? turma.id.substring(0, 8) + "..." : "ID Nulo";
+        
+        // Tenta pegar o nome da matéria com segurança
+        let nomeDisciplina = "Sem Matéria";
+        if (turma.subjects && turma.subjects.name) {
+            nomeDisciplina = turma.subjects.name;
+        } else if (turma.disciplina) { // Caso antigo
+            nomeDisciplina = turma.disciplina;
+        }
+
+        const nomeTurma = turma.nome || "Sem Nome";
+        const semestre = nomeTurma.includes("20") ? nomeTurma.split("-").pop() : "-";
+
         tbody.innerHTML += `
           <tr>
-            <td>${turma.id}</td>
-            <td>${turma.nome}</td>
-            <td>${turma.disciplina}</td>
+            <td title="${turma.id || ''}"><span class="status pending">${idCurto}</span></td>
+            <td style="font-weight: bold;">${nomeDisciplina}</td>
+            <td>${nomeTurma}</td>
+            <td>${semestre}</td>
             <td>
-              <a href="#" class="acessar-turma-btn" data-turma-id="${turma.id}">Acessar</a>
+              <a href="#" class="btn status return acessar-turma-btn" data-turma-id="${turma.id}">Acessar</a>
             </td>
           </tr>
         `;
       });
-      // Adiciona evento para acessar turma
+
+      // Reativa os botões
       document.querySelectorAll(".acessar-turma-btn").forEach(btn => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
-          acessarTurma(btn.getAttribute("data-turma-id"));
+          if (typeof acessarTurma === "function") {
+              acessarTurma(btn.getAttribute("data-turma-id"));
+          } else {
+              console.error("Função acessarTurma não existe!");
+          }
         });
       });
+    })
+    .catch(err => {
+        console.error("Erro fatal ao carregar turmas:", err);
+        const tbody = document.querySelector("#home_content .recentOrders tbody");
+        if(tbody) tbody.innerHTML = "<tr><td colspan='5'>Erro ao carregar dados. Verifique o console (F12).</td></tr>";
     });
 }
 
@@ -160,13 +197,44 @@ function acessarAluno(matricula, turmaId) {
           `;
         });
       // Gráficos do aluno
-      const chartContainer = document.getElementById("aluno_graficos_container");
-      chartContainer.innerHTML = `
-        <img src="http://127.0.0.1:8000/graphics/${matricula}/evolucao_das_notas" alt="Evolução das notas" style="max-width:100%;"><br>
-        <img src="http://127.0.0.1:8000/graphics/${matricula}/freq_x_media_final" alt="Frequência x Média Final" style="max-width:100%;"><br>
-        <img src="http://127.0.0.1:8000/graphics/${matricula}/status_aprovacao" alt="Status aprovação" style="max-width:100%;">
-      `;
+const chartContainer = document.getElementById("aluno_graficos_container");
+// Adicionei a classe 'chart-img' e usei flexbox na div container (via CSS)
+chartContainer.innerHTML = `
+  <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div style="flex: 1; min-width: 300px;">
+        <h4>Evolução</h4>
+        <img src="http://127.0.0.1:8000/graphics/${matricula}/evolucao_das_notas" class="chart-img" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+    </div>
+    <div style="flex: 1; min-width: 300px;">
+        <h4>Frequência vs Nota</h4>
+        <img src="http://127.0.0.1:8000/graphics/${matricula}/freq_x_media_final" class="chart-img" style="width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+    </div>
+  </div>
+`;
+
+carregarSelectDisciplinas(matricula);
+      
     });
+}
+
+// 3.9 carregar Turma 
+function carregarDisciplinasDoAluno(matricula) {
+    fetch(`http://127.0.0.1:8000/students/${matricula}/disciplines`)
+        .then(res => res.json())
+        .then(lista => {
+            console.log("Disciplinas encontradas:", lista);
+            
+            // Exemplo: Preenchendo um <select id="filtro_disciplina">
+            const select = document.getElementById("filtro_disciplina");
+            select.innerHTML = "<option value=''>Selecione uma matéria...</option>";
+            
+            lista.forEach(item => {
+                // item.class_id = ID da turma
+                // item.label = "Banco de Dados (Turma A)"
+                select.innerHTML += `<option value="${item.class_id}">${item.label}</option>`;
+            });
+        })
+        .catch(err => console.error("Erro ao carregar disciplinas:", err));
 }
 
 // 4. Detalhar turma
@@ -198,3 +266,48 @@ document.querySelectorAll(".chart-btn[data-chart-type='desempenho_geral']").forE
     if (disciplina) carregarGraficosGerais(disciplina);
   });
 });
+
+// função para conseguir pegar os nomes das disciplinas 
+function carregarSelectDisciplinas(matricula) {
+    const select = document.getElementById("select_disciplina_aluno");
+
+    // 1. Busca a lista no Backend
+    fetch(`http://127.0.0.1:8000/students/${matricula}/disciplines`)
+        .then(res => res.json())
+        .then(lista => {
+            // Limpa o select
+            select.innerHTML = '<option value="">Todas as Disciplinas</option>';
+
+            if (lista.length === 0) {
+                select.innerHTML += '<option disabled>Nenhuma disciplina encontrada</option>';
+                return;
+            }
+
+            // 2. Preenche com os dados vindos do Python
+            lista.forEach(item => {
+                // item.class_id = ID da turma
+                // item.label = "Banco de Dados (Turma A)"
+                select.innerHTML += `<option value="${item.class_id}">${item.label}</option>`;
+            });
+
+            // 3. Adiciona evento de mudança
+            // Quando o usuário escolhe uma matéria, podemos atualizar um gráfico específico
+            select.addEventListener("change", function() {
+                const turmaId = this.value;
+                const imgEvolucao = document.getElementById("img_evolucao");
+                
+                if (turmaId) {
+                    console.log("Usuário selecionou a turma ID:", turmaId);
+                    alert("Você selecionou: " + this.options[this.selectedIndex].text);
+                } else {
+                    // Reseta para o gráfico geral
+                    imgEvolucao.src = `http://127.0.0.1:8000/graphics/${matricula}/evolucao_das_notas`;
+                }
+            });
+
+        })
+        .catch(err => {
+            console.error("Erro ao carregar disciplinas:", err);
+            select.innerHTML = '<option>Erro ao carregar</option>';
+        });
+}
